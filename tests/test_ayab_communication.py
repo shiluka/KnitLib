@@ -30,16 +30,18 @@ class TestCommunication(unittest.TestCase):
     self.dummy_serial = serial.serial_for_url("loop://logging=debug")
     self.comm_dummy = AyabCommunication(self.dummy_serial)
 
-  """Test on closing serial port communication."""
   def test_close_serial(self):
+    """Test on closing serial port communication."""
+    
       before = self.dummy_serial.isOpen()
       assert before
       self.comm_dummy.close_serial()
       after = self.dummy_serial.isOpen()
       assert after == False
 
-  """Test on opening serial port communication with a baudrate 115200."""
   def test_open_serial(self):
+    """Test on opening serial port communication with a baudrate 115200."""
+    
     with patch.object(serial,'Serial') as mock_method:
       mock_method.return_value = object()
       self.ayabCom = AyabCommunication()
@@ -55,23 +57,26 @@ class TestCommunication(unittest.TestCase):
       assert "CommunicationException" in str(excinfo.type)
       mock_method.assert_called_once_with('dummyPortname',115200)
 
-  """Test on sending a start message to the controller."""
   def test_req_start(self):
+    """Test on sending a start message to the controller."""
+    
     start_val, end_val = 0, 10
     self.comm_dummy.req_start(start_val, end_val)
     byte_array = bytearray([0x01, start_val, end_val, 0x0a, 0x0d])
     bytes_read = self.dummy_serial.read(len(byte_array))
     self.assertEqual(bytes_read, byte_array)
 
-  """Test on Sending a request for information to controller."""
   def test_req_info(self):
+    """Test on Sending a request for information to controller."""
+    
     self.comm_dummy.req_info()
     byte_array = bytearray([0x03, 0x0a, 0x0d])
     bytes_read = self.dummy_serial.read(len(byte_array))
     assert bytes_read == byte_array
 
-  """Test on sending a line of data via the serial port."""
   def test_cnf_line(self):
+    """Test on sending a line of data via the serial port."""
+    
     lineNumber = 13
     lineData   = chr(0xAB)
     flags      = 0x12
@@ -81,8 +86,9 @@ class TestCommunication(unittest.TestCase):
     bytes_read = self.dummy_serial.read(len(byte_array))
     assert bytes_read == byte_array
 
-  """Test on reading a line from serial communication."""
   def test_read_line(self):
+    """Test on reading a line from serial communication."""
+    
     byte_start_val = 0x01
     byte_end_val = 0x12
     byte_array = bytearray([0xC1, byte_start_val, byte_end_val, 0x0a, 0x0d])
