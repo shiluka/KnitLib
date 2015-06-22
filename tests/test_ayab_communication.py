@@ -31,11 +31,11 @@ class TestCommunication(unittest.TestCase):
 
   def test_close_serial(self):
     """Test on closing serial port communication."""
-      before = self.dummy_serial.isOpen()
-      assert before
-      self.comm_dummy.close_serial()
-      after = self.dummy_serial.isOpen()
-      assert after == False
+    before = self.dummy_serial.isOpen()
+    assert before
+    self.comm_dummy.close_serial()
+    after = self.dummy_serial.isOpen()
+    assert after == False
 
   def test_open_serial(self):
     """Test on opening serial port communication with a baudrate 115200."""
