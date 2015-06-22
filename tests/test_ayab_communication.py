@@ -23,7 +23,6 @@ import unittest
 from knitlib.plugins.ayab_plugin.ayab_communication import AyabCommunication
 from mock import patch
 
-
 class TestCommunication(unittest.TestCase):
 
   def setUp(self):
@@ -32,7 +31,6 @@ class TestCommunication(unittest.TestCase):
 
   def test_close_serial(self):
     """Test on closing serial port communication."""
-    
       before = self.dummy_serial.isOpen()
       assert before
       self.comm_dummy.close_serial()
@@ -41,7 +39,6 @@ class TestCommunication(unittest.TestCase):
 
   def test_open_serial(self):
     """Test on opening serial port communication with a baudrate 115200."""
-    
     with patch.object(serial,'Serial') as mock_method:
       mock_method.return_value = object()
       self.ayabCom = AyabCommunication()
@@ -59,7 +56,6 @@ class TestCommunication(unittest.TestCase):
 
   def test_req_start(self):
     """Test on sending a start message to the controller."""
-    
     start_val, end_val = 0, 10
     self.comm_dummy.req_start(start_val, end_val)
     byte_array = bytearray([0x01, start_val, end_val, 0x0a, 0x0d])
@@ -68,7 +64,6 @@ class TestCommunication(unittest.TestCase):
 
   def test_req_info(self):
     """Test on Sending a request for information to controller."""
-    
     self.comm_dummy.req_info()
     byte_array = bytearray([0x03, 0x0a, 0x0d])
     bytes_read = self.dummy_serial.read(len(byte_array))
@@ -76,7 +71,6 @@ class TestCommunication(unittest.TestCase):
 
   def test_cnf_line(self):
     """Test on sending a line of data via the serial port."""
-    
     lineNumber = 13
     lineData   = chr(0xAB)
     flags      = 0x12
@@ -88,7 +82,6 @@ class TestCommunication(unittest.TestCase):
 
   def test_read_line(self):
     """Test on reading a line from serial communication."""
-    
     byte_start_val = 0x01
     byte_end_val = 0x12
     byte_array = bytearray([0xC1, byte_start_val, byte_end_val, 0x0a, 0x0d])
