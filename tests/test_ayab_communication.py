@@ -20,7 +20,6 @@
 import pytest
 import serial
 import unittest
-#from ayab.plugins.ayab_plugin.ayab_communication import AyabCommunication
 from knitlib.plugins.ayab_plugin.ayab_communication import AyabCommunication
 from mock import patch
 
